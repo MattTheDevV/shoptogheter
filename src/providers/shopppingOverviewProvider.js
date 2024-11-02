@@ -1,40 +1,120 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useUser } from './userProvider';
 
 // Create context
 const ShoppingListContext = createContext();
 
 // Sample data structure for lists
 const initialLists = [
-  {
-    id: '1',
-    name: 'Weekly Groceries',
-    owner: 'user1',
-    collaborators: ['user2', "user3","user4"],
-    items: [
-      { id: 'item1', name: 'Milk', done: false },
-      { id: 'item2', name: 'Eggs', done: false },
-    ],
-    archived: false,
-  },
-  {
-    id: '2',
-    name: 'Party Supplies',
-    owner: 'user2',
-    collaborators: ['user1'],
-    items: [
-      { id: 'item1', name: 'Cups', done: false },
-      { id: 'item2', name: 'Plates', done: true },
-    ],
-    archived: false,
-  },
-];
+    {
+      id: '1',
+      name: 'Weekly Groceries',
+      owner: 'user1',
+      collaborators: ['user2', 'user3', 'user4'],
+      items: [
+        { id: 'item1', name: 'Milk', done: false },
+        { id: 'item2', name: 'Eggs', done: false },
+        { id: 'item3', name: 'Bread', done: true },
+        { id: 'item4', name: 'Butter', done: false },
+        { id: 'item5', name: 'Cheese', done: false },
+      ],
+      archived: false,
+    },
+    {
+      id: '2',
+      name: 'Party Supplies',
+      owner: 'user2',
+      collaborators: ['user1'],
+      items: [
+        { id: 'item1', name: 'Cups', done: false },
+        { id: 'item2', name: 'Plates', done: true },
+        { id: 'item3', name: 'Napkins', done: false },
+        { id: 'item4', name: 'Plastic Cutlery', done: false },
+        { id: 'item5', name: 'Party Hats', done: false },
+      ],
+      archived: false,
+    },
+    {
+      id: '3',
+      name: 'Camping Gear',
+      owner: 'user3',
+      collaborators: ['user1', 'user2'],
+      items: [
+        { id: 'item1', name: 'Tent', done: false },
+        { id: 'item2', name: 'Sleeping Bags', done: false },
+        { id: 'item3', name: 'Flashlight', done: true },
+        { id: 'item4', name: 'Camping Stove', done: false },
+        { id: 'item5', name: 'First Aid Kit', done: false },
+        { id: 'item6', name: 'Bug Spray', done: false },
+      ],
+      archived: false,
+    },
+    {
+      id: '4',
+      name: 'Office Supplies',
+      owner: 'user4',
+      collaborators: ['user2'],
+      items: [
+        { id: 'item1', name: 'Notebooks', done: false },
+        { id: 'item2', name: 'Pens', done: false },
+        { id: 'item3', name: 'Stapler', done: true },
+        { id: 'item4', name: 'Printer Ink', done: false },
+        { id: 'item5', name: 'Sticky Notes', done: false },
+      ],
+      archived: false,
+    },
+    {
+      id: '5',
+      name: 'Home Improvement',
+      owner: 'user1',
+      collaborators: ['user3', 'user4'],
+      items: [
+        { id: 'item1', name: 'Paint', done: false },
+        { id: 'item2', name: 'Brushes', done: true },
+        { id: 'item3', name: 'Roller', done: false },
+        { id: 'item4', name: 'Sandpaper', done: false },
+        { id: 'item5', name: 'Drop Cloth', done: false },
+        { id: 'item6', name: 'Ladder', done: false },
+      ],
+      archived: false,
+    },
+    {
+      id: '6',
+      name: 'Vacation Packing List',
+      owner: 'user2',
+      collaborators: ['user1', 'user4'],
+      items: [
+        { id: 'item1', name: 'Sunscreen', done: false },
+        { id: 'item2', name: 'Sunglasses', done: true },
+        { id: 'item3', name: 'Swimsuits', done: false },
+        { id: 'item4', name: 'Travel Adapter', done: false },
+        { id: 'item5', name: 'Camera', done: false },
+      ],
+      archived: false,
+    },
+    {
+      id: '7',
+      name: 'DIY Craft Supplies',
+      owner: 'user4',
+      collaborators: ['user1', 'user3'],
+      items: [
+        { id: 'item1', name: 'Glue Gun', done: true },
+        { id: 'item2', name: 'Craft Paper', done: false },
+        { id: 'item3', name: 'Scissors', done: false },
+        { id: 'item4', name: 'Ribbons', done: false },
+        { id: 'item5', name: 'Acrylic Paints', done: false },
+        { id: 'item6', name: 'Brushes', done: true },
+      ],
+      archived: false,
+    },
+  ];
 
 // Provider component
 export const ShoppingListProvider = ({ children }) => {
   const [lists, setLists] = useState(initialLists);
-  const [currentUser, setCurrentUser] = useState('user1'); // Example current user
+  const { currentUser } = useUser(); // Get currentUser from user context
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [inviteListId, setInviteListId] = useState(null);
   const [newCollaborator, setNewCollaborator] = useState('');

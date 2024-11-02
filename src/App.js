@@ -3,6 +3,7 @@ import "./App.css"
 import Topbar from "./components/topbar/topbar";
 import ShoppingListWrapper from './components/shoppingListWrapper/shoppingListWrapper';
 import { ShoppingListProvider } from './providers/shopppingOverviewProvider';
+import { UserProvider } from './providers/userProvider';
 
 
 // Import Bootstrap CSS
@@ -13,10 +14,12 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 function App() {
   return (
     <>
-    <ShoppingListProvider>
-      <Topbar/>
-      <ShoppingListWrapper/>
-    </ShoppingListProvider>
+    <UserProvider>
+      <ShoppingListProvider>
+        <Topbar/>
+        <ShoppingListWrapper/>
+      </ShoppingListProvider>
+    </UserProvider>
     </>
   );
 }

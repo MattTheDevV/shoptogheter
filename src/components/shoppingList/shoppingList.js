@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useShoppingList } from '../../providers/shopppingOverviewProvider';
+import { useUser } from '../../providers/userProvider';
 import './shoppingList.css';
 
 const ShoppingList = ({ list }) => {
   const { addItem, toggleItemDone, updateListName, openInviteModal, archiveList, leaveList, deleteList, deleteItem } = useShoppingList();
-  const currentUser = 'user1'; // Replace with your actual current user logic
+  const { currentUser } = useUser(); // Get currentUser from user context
   const [showCompleted, setShowCompleted] = useState(true);
 
   return (
@@ -24,6 +25,7 @@ const ShoppingList = ({ list }) => {
           )}
         </h2>
       </div>
+
       <ul>
         {list.items
           .filter(item => showCompleted || !item.done)
