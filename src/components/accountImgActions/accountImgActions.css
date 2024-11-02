@@ -1,0 +1,40 @@
+.dropdown {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.accountImg {
+    height: 70%;
+    border-radius: 100%;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    background-color: #202124;
+    border: 1px solid #575757;
+}
+
+.dropdown-item:hover {
+    background-color: #323232;
+    color: #ccc;
+}
+
+.dropdown-item {
+    color: #ccc;
+}
+
+.userNameLabel {
+    color: #ccc;
+    justify-self: center;
+}
+
+.dropdown-divider {
+    border-top: 1px solid rgba(180, 180, 180, 0.8);
+}
+
+.greeting_text {
+    color: #ccc;
+    padding-left: 10px;
+}

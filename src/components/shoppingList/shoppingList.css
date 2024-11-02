@@ -1,0 +1,118 @@
+.shoppingListItem {
+    break-inside: avoid;
+    margin-bottom: 1em;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    border: none;
+    transition: box-shadow 0.3s ease;
+    border-radius: 10px;
+    border: 1px solid #5f6368;
+}
+
+.shoppingListItemToolbox {
+    display: flex;
+    justify-content: end;
+    margin-top: 10px;
+}
+
+.shoppingListItem h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    color: #e8eaed;
+    font-size: 18px;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+}
+
+.shoppingListItemToolbox > button {
+    background-color: #202124;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: small;
+    color: #b6b6b6;
+    padding-left: 10px;
+}
+
+.shoppingListItem ul {
+    margin-left: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.shoppingListItem ul li {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    color: #b6b6b6;
+}
+
+.shoppingListItem ul li input[type="text"] {
+    background-color: #202124;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    color: #b6b6b6;
+    font-size: 15px;
+}
+
+.shoppingListItem ul li input[type="text"] {
+    background-color: #202124;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    color: #b6b6b6;
+    font-size: 15px;
+}
+
+.shoppingListItem ul li input[type="checkbox"] { 
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: #4285f4;
+}
+.shoppingListItem input[type="text"]:focus {
+    border-bottom: 1px solid transparent; /* Hide the border when focused */
+    outline: none; /* Remove the default focus outline */
+  }
+
+.shoppingListItem ul li input[type="checkbox"]:checked {
+    accent-color: #297a00; 
+}
+
+.wrapper {
+    border-bottom: 1px solid #575757;
+}
+
+.shoppingListNameToolbox {
+    display: flex;
+}
+
+.changeNameButton {
+    background: none;
+    border: none;
+    color: #ccc;
+    padding-left: 10px;
+}
+
+.shoppingListMemberTag {
+    padding-left: 10px;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+.list-item .mdi-delete {
+visibility: hidden;
+cursor: pointer;
+}
+
+.list-item:hover .mdi-delete {
+visibility: visible;
+}

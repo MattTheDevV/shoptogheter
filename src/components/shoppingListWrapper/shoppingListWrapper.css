@@ -1,0 +1,15 @@
+.shoppingListWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.shoppingLists {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 1200px;
+    columns: 350px; /* Maintains the masonry layout */
+    min-height: calc(100vh - 40px); /* Stretch to full viewport height minus margins */
+    padding: 20px;
+    box-sizing: border-box;
+}
