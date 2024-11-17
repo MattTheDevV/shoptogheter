@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useUser } from './userProvider';
@@ -96,7 +96,7 @@ const initialLists = [
     },
     {
       id: '7',
-      name: 'DIY Craft Supplies',
+      name: 'This list is archived',
       owner: 'user4',
       collaborators: ['user1', 'user3'],
       items: [
@@ -107,7 +107,7 @@ const initialLists = [
         { id: 'item5', name: 'Acrylic Paints', done: false },
         { id: 'item6', name: 'Brushes', done: true },
       ],
-      archived: false,
+      archived: true,
     },
   ];
 
@@ -121,12 +121,22 @@ export const ShoppingListProvider = ({ children }) => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null);
   const [confirmParams, setConfirmParams] = useState([]);
+  const [newListName, setNewListName] = useState('');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [showArchived, setShowArchived] = useState(false);
+
+  const toggleShowArchived = () => {
+    setShowArchived((prev) => !prev);
+  };
 
   const getUserLists = () => {
     return lists.filter(
-      (list) => (list.owner === currentUser || list.collaborators.includes(currentUser)) && !list.archived
+      (list) =>
+        (list.owner === currentUser || list.collaborators.includes(currentUser)) &&
+        (showArchived || !list.archived) 
     );
   };
+  
 
   const addList = (name) => {
     const newList = {
@@ -138,7 +148,9 @@ export const ShoppingListProvider = ({ children }) => {
       archived: false,
     };
     setLists([...lists, newList]);
+    console.log("Created new list: " + name);
   };
+
 
   const updateListName = (listId, newName) => {
     setLists((prevLists) =>
@@ -195,7 +207,7 @@ export const ShoppingListProvider = ({ children }) => {
     setLists((prevLists) =>
       prevLists.map((list) =>
         list.id === listId && list.owner === currentUser
-          ? { ...list, archived: true }
+          ? { ...list, archived: !list.archived }
           : list
       )
     );
@@ -272,6 +284,22 @@ export const ShoppingListProvider = ({ children }) => {
     closeConfirmModal();
   };
 
+  const handleCreateList = () => {
+    if (newListName.trim() !== '') {
+      addList(newListName.trim());
+      closeCreateModal();
+    }
+  };
+
+  const openCreateModal = () => {
+    setIsCreateModalOpen(true);
+  };
+
+  const closeCreateModal = () => {
+    setIsCreateModalOpen(false);
+    setNewListName('');
+  };
+
   // Modify the openConfirmModal usage for delete and leave actions
   const deleteListWithConfirmation = (listId) => {
     openConfirmModal(deleteList, listId);
@@ -299,6 +327,9 @@ export const ShoppingListProvider = ({ children }) => {
         leaveList: leaveListWithConfirmation,
         openInviteModal,
         deleteItem: deleteItemWithConfirmation,
+        openCreateModal,
+        toggleShowArchived,
+        showArchived
       }}
     >
       {children}
@@ -353,20 +384,46 @@ export const ShoppingListProvider = ({ children }) => {
           </div>
         </Modal.Body>
         <Modal.Footer className="bg-dark text-light" style={{ border: "1px solid #5f6368" }}>
-          <Button variant="secondary" onClick={closeInviteModal}>Close</Button>
+          <Button variant="secondary" onClick={closeInviteModal}>Zavřít</Button>
         </Modal.Footer>
       </Modal>
 
       <Modal show={isConfirmModalOpen} onHide={closeConfirmModal} centered dialogClassName="modal-dark">
         <Modal.Header closeButton className="bg-dark text-light" style={{ border: "1px solid #5f6368" }}>
-          <Modal.Title>Are you sure?</Modal.Title>
+          <Modal.Title>Jste si jistí?</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-dark text-light" style={{ border: "1px solid #5f6368" }}>
-          <p>Are you sure you want to proceed with this action?</p>
+          <p>Opravdu chcete tuto akci provést?</p>
         </Modal.Body>
         <Modal.Footer className="bg-dark text-light" style={{ border: "1px solid #5f6368" }}>
-          <Button variant="secondary" onClick={closeConfirmModal}>Cancel</Button>
-          <Button variant="danger" onClick={handleConfirmAction}>Confirm</Button>
+          <Button variant="secondary" onClick={closeConfirmModal}>Zrušit</Button>
+          <Button variant="danger" onClick={handleConfirmAction}>Potvrdit</Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={isCreateModalOpen} onHide={closeCreateModal} centered>
+        <Modal.Header closeButton className="bg-dark text-light">
+          <Modal.Title>Vytvořit nový list</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="bg-dark text-light">
+          <div style={{ display: 'flex' }}>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Zadejte jméno nového seznamu"
+              value={newListName}
+              onChange={(e) => setNewListName(e.target.value)}
+              style={{ marginRight: "20px", border: "1px solid #5f6368", placeholder: "#ccc" }}
+            />
+            <Button variant="primary" onClick={handleCreateList}>
+              Vytvořit
+            </Button>
+          </div>
+        </Modal.Body>
+        <Modal.Footer className="bg-dark text-light">
+          <Button variant="secondary" onClick={closeCreateModal}>
+            Zavřít
+          </Button>
         </Modal.Footer>
       </Modal>
     </ShoppingListContext.Provider>

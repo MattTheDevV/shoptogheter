@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useShoppingList } from '../../providers/shopppingOverviewProvider';
 import { useUser } from '../../providers/userProvider';
 import './shoppingList.css';
@@ -18,6 +18,9 @@ const ShoppingList = ({ list }) => {
           ) : (  
             <span className="mdi mdi-wallet-membership shoppingListMemberTag" style={{ color: "#2074e1" }}></span>
           )}
+          {list.archived ? (
+            <span className="mdi mdi-archive shoppingListMemberTag" style={{ color: "purple" }}></span>
+          ) : (null)}
           {list.owner === currentUser && (
             <button className='changeNameButton' onClick={() => updateListName(list.id, prompt('Enter shopping list name:'))}>
               <span className="mdi mdi-pencil"></span>
@@ -68,7 +71,10 @@ const ShoppingList = ({ list }) => {
         </button>
         {list.owner === currentUser ? (
           <>
-            <button onClick={() => archiveList(list.id)}><span className="mdi mdi-archive"></span> Archivovat</button>
+            <button onClick={() => archiveList(list.id)}>
+            <span className="mdi mdi-archive"></span>{' '}
+              {list.archived ? 'Obnovit' : 'Archivovat'}
+            </button>
             <button onClick={() => deleteList(list.id)}><span className="mdi mdi-delete"></span> Smazat</button>
           </>
         ) : (

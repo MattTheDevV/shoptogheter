@@ -5,7 +5,6 @@
 }
 
 .shoppingLists {
-    margin-top: 20px;
     width: 100%;
     max-width: 1200px;
     columns: 350px; /* Maintains the masonry layout */

@@ -4,7 +4,7 @@ import Topbar from "./components/topbar/topbar";
 import ShoppingListWrapper from './components/shoppingListWrapper/shoppingListWrapper';
 import { ShoppingListProvider } from './providers/shopppingOverviewProvider';
 import { UserProvider } from './providers/userProvider';
-
+import Toolbar from './components/toolbar/toolbar';
 
 // Import Bootstrap CSS
 
@@ -17,6 +17,7 @@ function App() {
     <UserProvider>
       <ShoppingListProvider>
         <Topbar/>
+        <Toolbar/>
         <ShoppingListWrapper/>
       </ShoppingListProvider>
     </UserProvider>
